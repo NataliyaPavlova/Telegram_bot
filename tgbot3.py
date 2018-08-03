@@ -4,7 +4,7 @@ import random
 import re
 import config
 
-bot = telebot.AsyncTeleBot(config.token)
+bot = telebot.TeleBot(config.token)
 
 
 def get_quotes(filename='curse'):
