@@ -12,7 +12,6 @@ pyasn1-modules==0.2.2
 pycparser==2.18
 pyOpenSSL==18.0.0
 requests==2.19.1
-re==2.2.1
 service-identity==17.0.0
 six==1.11.0
 TelegramBotAPI==0.3.2
