@@ -26,10 +26,10 @@ def say_wise(message):
     key_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
     result1 = False
     for key in key_words:
-        if re.search(key, message.text):
+        if bool(re.search(key, message.text)):
             result1 = True
             break
-    result2 = re.search('@WolfLarsenbot', message.text)
+    result2 = bool(re.search('@WolfLarsenbot', message.text))
     return (result1 and result2)
 
 
@@ -61,5 +61,5 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
-    server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
+    server.run(host="0.0.0.0", port=80)
 
