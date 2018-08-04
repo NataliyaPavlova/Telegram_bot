@@ -61,5 +61,5 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
-    server.run(host="0.0.0.0", port=80)
+    server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
