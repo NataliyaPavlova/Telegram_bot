@@ -9,6 +9,7 @@ import logging
 from flask import Flask, request
 
 bot = telebot.TeleBot(config.token)
+server = Flask(__name__)
 
 
 def get_quotes(filename='curse'):
@@ -46,23 +47,13 @@ def answer_common(message):
     bot.reply_to(message, text)
 
 
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url="https://nameless-beyond-17722.herokuapp.com") 
+    return "?", 200
+
 if __name__ == '__main__':
-
-     random.seed()
-     logger = telebot.logger
-     telebot.logger.setLevel(logging.INFO)
-
-     server = Flask(__name__)
-     
-     @server.route("/bot", methods=['POST'])
-     def getMessage():
-         bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-         return "!", 200
-    
-     @server.route("/")
-     def webhook():
-         bot.remove_webhook()
-         bot.set_webhook(url="https://nameless-beyond-17722.herokuapp.com") 
-         return "?", 200
-     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
+    random.seed()
+    server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
