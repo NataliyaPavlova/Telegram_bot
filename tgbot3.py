@@ -44,11 +44,11 @@ def say_wise(message):
     result1 = False
     result12 = False
     for key in key_words:
-        if bool(re.search(key, str(message.text))):
+        if bool(re.search(key, str(message.text).lower())):
             result1 = True
             break
     if result1:
-        result12 = check_nots(str(message.text))
+        result12 = check_nots(str(message.text).lower())
     result2 = bool(re.search('@WolfLarsenbot', str(message.text)))
     return bool(result12 and result2)
 
@@ -58,7 +58,7 @@ def curse(message):
     key_words = ['angry', 'fuck', 'wtf', 'furious', 'evil', 'grumpy', 'yelling', 'kill']
     result = False
     for key in key_words:
-        if bool(re.search(key, str(message.text))):
+        if bool(re.search(key, str(message.text).lower())):
             result = True
             break
     return bool(result)
@@ -68,21 +68,21 @@ def curse(message):
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
     text = get_quotes(filename='cheer')
-    bot.send_message(message, text)
+    bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler(func=curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     text = get_quotes()
-    bot.send_message(message, text)
+    bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     text = 'Who knows - does not say. Who says - does not know'
-    bot.send_message(message, text)
+    bot.send_message(message.chat.id, text)
 
 
 @server.route('/' + config.token, methods=['POST'])
