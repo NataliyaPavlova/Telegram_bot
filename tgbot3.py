@@ -48,7 +48,7 @@ def say_wise(message):
             break
     if result1:
         result12 = check_nots(str(message.text).lower(), key)
-    result2 = bool(re.search('@wolflarsenbot', str(message.text)))
+    result2 = bool(re.search('@wolflarsenbot', str(message.text).lower()))
     return bool(result12 and result2)
 
 
