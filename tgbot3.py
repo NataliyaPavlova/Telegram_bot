@@ -21,30 +21,68 @@ def get_quotes(filename='curse'):
     return quotes_list[index]
 
 
+def check_nots(string, key):
+    ''' Return True if there are no negations for wise key word'''
+    # split string with , or ; or : or . or !
+    not_words = ['not', 'n\'t', 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down', 'dont']
+    parts = re.split("\W ", string)
+    print(parts)
+    # if in part with 'wise' words are 'not' words, then false
+    for part in parts:
+        if key in part:
+            for not_word in not_words:
+                if re.search(not_word, part):
+                    print(part, not_word)
+                    return False
+            break
+    return True
+
+
 def say_wise(message):
     ''' Return True if message contains smart words and is addressed to @WolfLarsenbot'''
     key_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
     result1 = False
+    result12 = False
     for key in key_words:
         if bool(re.search(key, str(message.text))):
             result1 = True
             break
+    if result1:
+        result12 = check_nots(str(message.text))
     result2 = bool(re.search('@WolfLarsenbot', str(message.text)))
-    return bool(result1 and result2)
+    return bool(result12 and result2)
+
+
+def curse(message):
+    ''' Return True if message contains angry words'''
+    key_words = ['angry', 'fuck', 'wtf', 'furious', 'evil', 'grumpy', 'yelling', 'kill']
+    result = False
+    for key in key_words:
+        if bool(re.search(key, str(message.text))):
+            result = True
+            break
+    return bool(result)
 
 
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
     text = get_quotes(filename='cheer')
-    bot.reply_to(message, text)
+    bot.send_message(message, text)
 
 
-@bot.message_handler(regexp='@WolfLarsenbot')
+@bot.message_handler(func=curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     text = get_quotes()
-    bot.reply_to(message, text)
+    bot.send_message(message, text)
+
+
+@bot.message_handler(regexp='@WolfLarsen')
+def answer_common(message):
+    ''' Bot curses down with quoted from curse file'''
+    text = 'Who knows - does not say. Who says - does not know'
+    bot.send_message(message, text)
 
 
 @server.route('/' + config.token, methods=['POST'])
