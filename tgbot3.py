@@ -26,11 +26,11 @@ def say_wise(message):
     key_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
     result1 = False
     for key in key_words:
-        if bool(re.search(key, message.text)):
+        if bool(re.search(key, str(message.text))):
             result1 = True
             break
-    result2 = bool(re.search('@WolfLarsenbot', message.text))
-    return (result1 and result2)
+    result2 = bool(re.search('@WolfLarsenbot', str(message.text)))
+    return bool(result1 and result2)
 
 
 @bot.message_handler(func=say_wise)
