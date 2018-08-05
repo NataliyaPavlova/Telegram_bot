@@ -26,15 +26,14 @@ def check_nots(string, key):
     # split string with , or ; or : or . or !
     not_words = ['not', 'n\'t', 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down', 'dont']
     parts = re.split("\W ", string)
-    print(parts)
+
     # if in part with 'wise' words are 'not' words, then false
     for part in parts:
         if key in part:
             for not_word in not_words:
                 if re.search(not_word, part):
-                    print(part, not_word)
                     return False
-            break
+
     return True
 
 
@@ -81,8 +80,11 @@ def answer_common(message):
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
-    text = 'Who knows - does not say. Who says - does not know'
-    bot.send_message(message.chat.id, text)
+    #add random choice here. like silence is gold etc
+    text = ['Who knows - does not say. Who says - does not know',
+            'Speech is silver, silence is golden',
+            'A shut mouth catches no flies']
+    bot.send_message(message.chat.id, random.choice(text))
 
 
 @server.route('/' + config.token, methods=['POST'])
