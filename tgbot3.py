@@ -60,7 +60,9 @@ def curse(message):
         if bool(re.search(key, str(message.text).lower())):
             result = True
             break
-    return bool(result)
+    if result:
+        result2 = check_nots(str(message.text).lower(), key)
+    return bool(result2)
 
 
 @bot.message_handler(func=say_wise)
