@@ -56,6 +56,7 @@ def curse(message):
     ''' Return True if message contains angry words'''
     key_words = ['angry', 'fuck', 'wtf', 'furious', 'evil', 'grumpy', 'yelling', 'kill']
     result = False
+    result2 = False
     for key in key_words:
         if bool(re.search(key, str(message.text).lower())):
             result = True
