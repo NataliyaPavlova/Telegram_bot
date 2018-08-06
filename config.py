@@ -1,3 +1,13 @@
 # -*- coding: utf-8 -*-
 
-token = '670416112:AAGVL16ltjqz0d2pEW_cywwWC44DQL7Sk6Y'
+not_words = ['not', 'n\'t', 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down', 'dont']
+wise_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
+curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
+               'grumpy', 'yelling', 'kill', 'shit', 'damn',
+               'asshole', 'ftw', 'stupid', 'bitch',
+               'whore', 'crap', 'bastard', 'jerk', 'slut', 'faggot']
+silence_words = ['Who knows - does not say. Who says - does not know',
+                 'Speech is silver, silence is golden',
+                 'A shut mouth catches no flies']
+
+

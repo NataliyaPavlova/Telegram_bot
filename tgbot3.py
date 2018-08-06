@@ -8,7 +8,8 @@ import config
 import logging
 from flask import Flask, request
 
-bot = telebot.TeleBot(config.token)
+
+bot = telebot.TeleBot(os.environ.get('TG_TOKEN'))
 server = Flask(__name__)
 
 
@@ -24,13 +25,12 @@ def get_quotes(filename='curse'):
 def check_nots(string, key):
     ''' Return True if there are no negations for wise key word'''
     # split string with , or ; or : or . or !
-    not_words = ['not', 'n\'t', 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down', 'dont']
     parts = re.split("\W ", string)
 
     # if in part with 'wise' words are 'not' words, then false
     for part in parts:
         if key in part:
-            for not_word in not_words:
+            for not_word in config.not_words:
                 if re.search(not_word, part):
                     return False
 
@@ -39,10 +39,9 @@ def check_nots(string, key):
 
 def say_wise(message):
     ''' Return True if message contains smart words and is addressed to @WolfLarsenbot'''
-    key_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
     result1 = False
     result12 = False
-    for key in key_words:
+    for key in config.wise_words:
         if bool(re.search(key, str(message.text).lower())):
             result1 = True
             break
@@ -54,13 +53,15 @@ def say_wise(message):
 
 def curse(message):
     ''' Return True if message contains angry words'''
-    key_words = ['angry', 'fuck', 'wtf', 'furious', 'evil', 'grumpy', 'yelling', 'kill']
     result = False
     result2 = False
-    for key in key_words:
+    for key in config.curse_words:
         if bool(re.search(key, str(message.text).lower())):
             result = True
             break
+        # catching 'fuuuuccckkkk' cases
+        if re.search('f+u+c+k+', str(message.text).lower()):
+            result = True
     if result:
         result2 = check_nots(str(message.text).lower(), key)
     return bool(result2)
@@ -84,10 +85,7 @@ def answer_common(message):
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     #add random choice here. like silence is gold etc
-    text = ['Who knows - does not say. Who says - does not know',
-            'Speech is silver, silence is golden',
-            'A shut mouth catches no flies']
-    bot.send_message(message.chat.id, random.choice(text))
+    bot.send_message(message.chat.id, random.choice(config.silence_words))
 
 
 @server.route('/' + config.token, methods=['POST'])
@@ -106,3 +104,9 @@ if __name__ == '__main__':
     random.seed()
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
+# hide token
+# redis
+# db
+# 'smart parsing'
+# /help and first msg to chat
+# catch exceptions and acknowledge users
