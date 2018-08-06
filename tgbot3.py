@@ -88,7 +88,7 @@ def answer_common(message):
     bot.send_message(message.chat.id, random.choice(config.silence_words))
 
 
-@server.route('/' + config.token, methods=['POST'])
+@server.route('/' + os.environ.get('TG_TOKEN'), methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
@@ -97,7 +97,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url="https://nameless-beyond-17722.herokuapp.com/"+config.token) 
+    bot.set_webhook(url="https://nameless-beyond-17722.herokuapp.com/"+os.environ.get('TG_TOKEN'))
     return "?", 200
 
 if __name__ == '__main__':
