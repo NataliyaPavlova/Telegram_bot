@@ -4,18 +4,20 @@ import telebot
 import random
 import os
 import config
+import redis
 import logging
 from flask import Flask, request
-from utils import get_quotes, say_wise, curse
+from utils import get_quotes, say_wise, curse, upload_toredis
 
 token = os.environ.get('TG_TOKEN')
 bot = telebot.TeleBot(token)
+redis = redis.from_url(os.environ.get("REDIS_URL"))
 server = Flask(__name__)
 
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
-    text = get_quotes(filename='cheer')
+    text = get_quotes(filename=config.filename1)
     bot.send_message(message.chat.id, text)
 
 
@@ -47,5 +49,7 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
+    upload_toredis(config.filename1)
+    upload_toredis(config.filename2)
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
