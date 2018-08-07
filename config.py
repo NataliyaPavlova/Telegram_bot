@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 not_words = ['not', "n't", 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down',
-             'dont', "don'' ' ''t", 'can\'t', 'mustn\'t', 'couldn\'t', 'doesn\'t']
+             'dont', "don'''t", 'can\'t', 'mustn\'t', 'couldn\'t', 'doesn\'t']
 wise_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
 curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
                'grumpy', 'yelling', 'kill', 'shit', 'damn',
