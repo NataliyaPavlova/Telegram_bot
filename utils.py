@@ -1,8 +1,10 @@
 import random
 import re
+import redis
+import os
 import config
 
-def get_quotes(filename='curse'):
+def get_quotes(filename=config.filename2):
     ''' Return randomly chosen quote from 'cheers' or 'curse' file '''
     with open(filename) as f:
         quotes_list = list(filter(lambda string: string != '\n', f.readlines()))
@@ -48,10 +50,35 @@ def curse(message):
         if bool(re.search(key, str(message.text).lower())):
             result = True
             break
-        # catching 'fuuuuccckkkk' cases
+        # catching 'ffuuuuccckkkk' cases
         if re.search('f+u+c+k+', str(message.text).lower()):
             result = True
     if result:
         result2 = check_nots(str(message.text).lower(), key)
     return bool(result2)
+
+def upload_toredis(filename):
+    ''' Upload data from the file to redis'''
+    # redis stores key-value: id-text
+    if not os.path.isfile(filename):
+        list_values=[]
+        filename=''
+    else:
+        setname = filename
+
+        # Read values from the file into the list
+        with open(filename) as f:
+            list_values = list(filter(lambda string: string != '\n', f.readlines()))
+
+    # Delete old set
+    redis.delete(setname)
+
+    # Upload new set
+    i = 0
+    for val in list_values:
+        key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
+        i+=1
+        redis.sadd(setname, key)
+        redis.set(key, val)
+
 
