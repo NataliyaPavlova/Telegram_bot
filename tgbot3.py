@@ -6,13 +6,20 @@ import os
 import config
 import redis
 import logging
+import datetime
 from flask import Flask, request
 from utils import get_quotes, say_wise, curse, upload_toredis
 
 token = os.environ.get('TG_TOKEN')
 bot = telebot.TeleBot(token)
 redis = redis.from_url(os.environ.get("REDIS_URL"))
+
 server = Flask(__name__)
+
+if not os.path.isdir('logs/'):
+    os.mkdir('logs/')
+logging.basicConfig(filename='logs/logs_{}.log'.format(datetime.date.today()),level=logging.DEBUG)
+
 
 @bot.message_handler(func=say_wise)
 def answer_common(message):
@@ -49,7 +56,16 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
-    upload_toredis(config.filename1)
-    upload_toredis(config.filename2)
+    logging.info('Start working!')
+    logging.info('Uploading to redis...')
+    #try:
+    #    upload_toredis(config.filename1)
+    #    logging.info('{} is successfully uploaded'.format(config.filename1))
+    #    upload_toredis(config.filename2)
+    #    logging.info('{} is successfully uploaded'.format(config.filename1))
+
+    #except BaseException as err:
+    #    logging.error('Fail upload to redis: {}'.format(err))
+
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
