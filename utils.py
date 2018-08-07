@@ -71,7 +71,7 @@ def upload_toredis(filename):
             list_values = list(filter(lambda string: string != '\n', f.readlines()))
 
     # Delete old set
-    redis.delete(setname)
+    #redis.delete(setname)
 
     # Upload new set
     i = 0
