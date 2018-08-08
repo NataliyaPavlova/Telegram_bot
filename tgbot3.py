@@ -21,6 +21,12 @@ if not os.path.isdir('logs/'):
 logging.basicConfig(filename='logs/logs_{}.log'.format(datetime.date.today()),level=logging.DEBUG)
 
 
+@bot.message_handler(regexp='@WolfLarsen')
+def answer_common(message):
+    ''' Bot sings pirate songs '''
+    bot.send_message(message.chat.id, random.choice(config.silence_words))
+
+
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
@@ -33,12 +39,6 @@ def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     text = get_quotes()
     bot.send_message(message.chat.id, text)
-
-
-@bot.message_handler(regexp='@WolfLarsen')
-def answer_common(message):
-    ''' Bot sends neutral expressions like silence is golden'''
-    bot.send_message(message.chat.id, random.choice(config.silence_words))
 
 
 @server.route('/' + token, methods=['POST'])

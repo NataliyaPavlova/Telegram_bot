@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-not_words = []
-wise_words = ['Nietzsche']
+not_words = ['dont', 'don\'t', 'not']
+wise_words = ['smart', 'clever', 'intelligent', 'Nietzsche']
 curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
                'grumpy', 'yelling', 'kill', 'shit', 'damn',
                'asshole', 'ftw', 'stupid', 'bitch',

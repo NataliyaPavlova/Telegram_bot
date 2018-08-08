@@ -19,7 +19,7 @@ def get_quotes(filename=config.filename2):
 def check_nots(string, key):
     ''' Return True if there are no negations for wise key word'''
     # split string with , or ; or : or . or !
-    parts = re.split("\W ", string)
+    parts = re.split(",;.!", string)
 
     # if in part with 'wise' words are 'not' words, then false
     for part in parts:
@@ -36,7 +36,7 @@ def say_wise(message):
     result1 = False
     result12 = False
     for key in config.wise_words:
-        if key in re.split('\W', str(message.text).lower()):
+        if key in re.split(' ', str(message.text).lower()):
             result1 = True
             break
     if result1:
