@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import random
 import re
 import redis
@@ -29,7 +32,7 @@ def check_nots(string, key):
 
 
 def say_wise(message):
-    ''' Return True if message contains smart words and is addressed to @WolfLarsenbot'''
+    ''' Return True if message contains smart words '''
     result1 = False
     result12 = False
     for key in config.wise_words:
@@ -38,8 +41,8 @@ def say_wise(message):
             break
     if result1:
         result12 = check_nots(str(message.text).lower(), key)
-    result2 = bool(re.search('@wolflarsenbot', str(message.text).lower()))
-    return bool(result12 and result2)
+
+    return bool(result12)
 
 
 def curse(message):

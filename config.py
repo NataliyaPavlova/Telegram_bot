@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-not_words = ['not', "n't", 'stop', 'cease', 'wind down', 'off', 'halt', 'shut down',
-             'dont', "''don\\'t''", 'can\'t', 'mustn\'t', 'couldn\'t', 'doesn\'t']
-wise_words = ['wise', 'wisdom', 'smart', 'clever', 'intelligent', 'sophisticated', 'sensible']
+not_words = []
+wise_words = ['meaning of life', 'sense of life']
 curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
                'grumpy', 'yelling', 'kill', 'shit', 'damn',
                'asshole', 'ftw', 'stupid', 'bitch',
-               'whore', 'crap', 'bastard', 'jerk', 'slut', 'faggot']
+               'whore', 'crap', 'bastard', 'jerk', 'slut', 'faggot', 'hell']
 silence_words = ["What shall we do with a drunken sailor? \nWhat shall we do with a drunken sailor? \n"
                  "What shall we do with a drunken sailor? \nEarly in the morning\n", "Way hay and up she rises \n"
                  "Way hay and up she rises \nWay hay and up she rises \nEarly in the morning \n",
