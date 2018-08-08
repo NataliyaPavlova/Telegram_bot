@@ -50,7 +50,7 @@ def curse(message):
     result = False
     result2 = False
     for key in config.curse_words:
-        if bool(re.search(key, str(message.text).lower())):
+        if key in (re.split('\W', str(message.text).lower())):
             result = True
             break
         # catching 'ffuuuuccckkkk' cases
