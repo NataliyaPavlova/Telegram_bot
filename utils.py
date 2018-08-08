@@ -36,7 +36,7 @@ def say_wise(message):
     result1 = False
     result12 = False
     for key in config.wise_words:
-        if bool(re.search(key, str(message.text).lower())):
+        if key in re.split('\W', str(message.text).lower()):
             result1 = True
             break
     if result1:
