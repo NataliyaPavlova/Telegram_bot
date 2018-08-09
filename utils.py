@@ -5,7 +5,9 @@ import random
 import re
 import redis
 import os
+import unittest
 import config
+
 
 def get_quotes(filename=config.filename2):
     ''' Return randomly chosen quote from 'cheers' or 'curse' file '''
@@ -19,7 +21,7 @@ def get_quotes(filename=config.filename2):
 def check_nots(string, key):
     ''' Return True if there are no negations for wise key word'''
     # split string with , or ; or : or . or !
-    parts = re.split(",;.!", string)
+    parts = re.split("[,;.!]", string)
 
     # if in part with 'wise' words are 'not' words, then false
     for part in parts:
@@ -60,8 +62,9 @@ def curse(message):
         result2 = check_nots(str(message.text).lower(), key)
     return bool(result2)
 
+
 def upload_toredis(filename):
-    ''' Upload data from the file to redis'''
+    ''' NOT FINISHED: Upload data from the file to redis'''
     # redis stores key-value: id-text
     if not os.path.isfile(filename):
         list_values=[]
@@ -84,4 +87,45 @@ def upload_toredis(filename):
         redis.sadd(setname, key)
         redis.set(key, val)
 
+
+class TestObject():
+    ''' Helper: to create analogue of telegram message type for testing utils functions'''
+    def __init__(self, string):
+        self.text = string
+
+class Test_utils(unittest.TestCase):
+    ''' unittests for utils functions '''
+    def test_get_qoutes(self):
+        self.assertTrue(get_quotes('curse'))
+        self.assertTrue(get_quotes('cheer'))
+
+    def test_say_wise(self):
+        string1 = 'want to hear smth intelligent please'
+        string2 = "don't want smart thoughts"
+        string3 = 'what does Nietzsche say'
+
+        self.assertEqual(True, say_wise(TestObject(string1)))
+        self.assertEqual(False, say_wise(TestObject(string2)))
+        self.assertEqual(True, say_wise(TestObject(string3)))
+
+
+    def test_check_nots(self):
+        string1 = 'dont say smth intelligent, please'
+        string2 = 'say smth clever, dont be so rude'
+
+        self.assertEqual(False, check_nots(string1, 'intelligent'))
+        self.assertEqual(True, check_nots(string2, 'clever'))
+
+
+    def test_curse(self):
+        string1 = 'i am soooo Angry'
+        string2 = 'hello'
+        string3 = "stop yelling, don't be rude"
+
+        self.assertEqual(True, curse(TestObject(string1)))
+        self.assertEqual(False, curse(TestObject(string2)))
+        self.assertEqual(False, curse(TestObject(string3)))
+
+if __name__=='__main__':
+    unittest.main()
 
