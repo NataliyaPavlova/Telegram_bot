@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-not_words = ['dont', 'don\'t', 'not', 'stop']
+not_words = ['dont', "don\u2019t", 'not', 'stop']
 wise_words = ['smart', 'clever', 'intelligent', 'nietzsche']
 curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
                'grumpy', 'yelling', 'kill', 'shit', 'damn',
@@ -13,7 +13,9 @@ silence_words = ["What shall we do with a drunken sailor? \nWhat shall we do wit
                  'Drag him to a hole until he \nWakes up naked \nClawing at the ceiling \nOf his grave \n',
                  'Whiskey drove me around Cape Horn \nWhiskey, Johnny! \nIt was many a month when I was gone \n'
                  'Whiskey for my Johnny O!\n',
-                 "Let's do the trucker's hitch \n The trucker's hitch \nLet's do the trucker's hitch \nThe trucker's hitch"]
+                 "Let's do the trucker's hitch \n The trucker's hitch \nLet's do the trucker's hitch \nThe trucker's hitch",
+                 "Oh, I am the wind the seamen love — \nI am steady, and strong, and true; \n"
+                 "They follow my track by the clouds above, \nO’er the fathomless tropic blue."]
 
 filename1='cheer'
 filename2='curse'
