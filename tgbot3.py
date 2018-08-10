@@ -19,8 +19,9 @@ server = Flask(__name__)
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
-    sys.stdout.write('Captain is drunk\n')
-    bot.send_message(message.chat.id, random.choice(config.silence_words))
+    sys.stdout.write('Captain is drunk and singing\n')
+    text = get_quotes(setname='songs')
+    bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler(func=say_wise)
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     random.seed()
     sys.stdout.write('Start working!\n')
     sys.stdout.write('Start uploading to redis...\n')
-    file_list = [config.filename1, config.filename2]
+    file_list = [config.filename1, config.filename2, config.filename3]
     try:
         upload_toredis(file_list)
         sys.stdout.write('Files are successfully uploaded')

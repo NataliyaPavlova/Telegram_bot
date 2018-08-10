@@ -17,7 +17,9 @@ def get_quotes(setname):
     try:
        sys.stdout.write('Looking for a random expression from {} set\n'.format(setname))
        key = r.srandmember(setname)
-       return r.get(key)
+       result = r.get(key)
+       sys.stdout.write('Found an expression from {} set: {}\n'.format(setname, result))
+       return result
     except Exception as e:
         sys.stdout.write('Fail to get an expression from {} set\n'.format(setname))
         raise
