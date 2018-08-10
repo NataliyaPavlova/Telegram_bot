@@ -56,15 +56,16 @@ def webhook():
 if __name__ == '__main__':
     random.seed()
     sys.stdout.write('Start working!\n')
-    #sys.stdout.write('Uploading to redis...\n')
-    #try:
-    #    upload_toredis(config.filename1)
-    #    logging.info('{} is successfully uploaded'.format(config.filename1))
+    sys.stdout.write('Start uploading to redis...\n')
+    try:
+        upload_toredis(config.filename1)
+        sys.stdout.write('{} is successfully uploaded'.format(config.filename1))
     #    upload_toredis(config.filename2)
     #    logging.info('{} is successfully uploaded'.format(config.filename1))
 
-    #except BaseException as err:
-    #    logging.error('Fail upload to redis: {}'.format(err))
+    except Exception as err:
+        sys.stdout.write('Fail upload to redis: {}'.format(err))
+        raise
 
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 

@@ -95,6 +95,7 @@ def upload_toredis(filename):
         i+=1
         redis.sadd(setname, key)
         redis.set(key, val)
+    sys.stdout.write('{} values from {} file are uploaded\n'.format(len(list_values), filename))
 
 
 class TestObject():
