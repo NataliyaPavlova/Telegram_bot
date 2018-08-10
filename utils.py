@@ -9,7 +9,7 @@ import unittest
 import redis
 import config
 
-r = redis.from_url(os.environ.get("REDIS_URL"))
+r = redis.from_url(os.environ.get("REDIS_URL"), decode_responses=True)
 
 
 def get_quotes(setname):
