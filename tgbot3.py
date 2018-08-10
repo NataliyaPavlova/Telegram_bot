@@ -27,7 +27,7 @@ def answer_common(message):
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
     sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
-    text = get_quotes(filename=config.filename1)
+    text = get_quotes(setname='cheer')
     bot.send_message(message.chat.id, text)
 
 
@@ -35,7 +35,7 @@ def answer_common(message):
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
-    text = get_quotes()
+    text = get_quotes(setname='curse')
     bot.send_message(message.chat.id, text)
 
 

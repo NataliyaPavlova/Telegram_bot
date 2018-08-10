@@ -10,20 +10,16 @@ import redis
 import config
 
 r = redis.from_url(os.environ.get("REDIS_URL"))
-#r = r_.Redis()
 
 
-def get_quotes(filename=config.filename2):
+def get_quotes(setname):
     ''' Return randomly chosen quote from 'cheers' or 'curse' file '''
     try:
-        with open(filename) as f:
-            sys.stdout.write('Opens the file {} for reading\n'.format(filename))
-            quotes_list = list(filter(lambda string: string != '\n', f.readlines()))
-            index = random.choice(range(len(quotes_list)))
-
-        return quotes_list[index]
+       sys.stdout.write('Looking for a random expression from {} set\n'.format(setname))
+       key = r.srandmember(setname)
+       return r.get(key)
     except Exception as e:
-        sys.stdout.write('Fails to opens the file {}\n'.format(filename))
+        sys.stdout.write('Fail to get an expression from {} set\n'.format(setname))
         raise
 
 
@@ -76,7 +72,7 @@ def curse(message):
 
 
 def upload_toredis(file_list):
-    ''' NOT FINISHED: Upload data from the file to redis'''
+    ''' Upload data from files with curse and cheer expressions to redis'''
     # redis stores key-value: id-text
 
     # Delete old sets
@@ -100,7 +96,7 @@ def upload_toredis(file_list):
         for val in list_values:
             key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
             i+=1
-            #r.sadd(setname, key)
+            r.sadd(setname, key)
             r.set(key, val)
         sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
 
