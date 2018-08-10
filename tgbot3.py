@@ -5,6 +5,7 @@ import random
 import os
 import sys
 import config
+import json
 import redis
 #import logging
 import datetime
@@ -20,7 +21,7 @@ server = Flask(__name__)
 def answer_common(message):
     ''' Bot sings pirate songs '''
     sys.stdout.write('Captain is drunk and singing\n')
-    text = get_quotes(setname='songs')
+    text = json.loads(get_quotes(setname='songs'))
     bot.send_message(message.chat.id, text)
 
 
