@@ -17,11 +17,6 @@ redis = redis.from_url(os.environ.get("REDIS_URL"))
 
 server = Flask(__name__)
 
-if not os.path.isdir('logs/'):
-    os.mkdir('logs/')
-logging.basicConfig(filename='logs/logs_{}.log'.format(datetime.date.today()),level=logging.DEBUG)
-
-
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
