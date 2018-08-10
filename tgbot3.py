@@ -56,9 +56,10 @@ if __name__ == '__main__':
     random.seed()
     sys.stdout.write('Start working!\n')
     sys.stdout.write('Start uploading to redis...\n')
+    file_list = [config.filename1, config.filename2]
     try:
-        upload_toredis(config.filename1)
-        sys.stdout.write('{} is successfully uploaded'.format(config.filename1))
+        upload_toredis(file_list)
+        sys.stdout.write('Files are successfully uploaded')
     #    upload_toredis(config.filename2)
     #    logging.info('{} is successfully uploaded'.format(config.filename1))
 

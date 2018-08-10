@@ -9,8 +9,8 @@ import unittest
 import redis
 import config
 
-r_ = redis.from_url(os.environ.get("REDIS_URL"))
-r = r_.Redis()
+r = redis.from_url(os.environ.get("REDIS_URL"))
+#r = r_.Redis()
 
 
 def get_quotes(filename=config.filename2):
@@ -75,30 +75,34 @@ def curse(message):
     return bool(result2)
 
 
-def upload_toredis(filename):
+def upload_toredis(file_list):
     ''' NOT FINISHED: Upload data from the file to redis'''
     # redis stores key-value: id-text
-    if not os.path.isfile(filename):
-        list_values=[]
-        filename=''
-    else:
-        setname = filename
 
-        # Read values from the file into the list
-        with open(filename) as f:
-            list_values = list(filter(lambda string: string != '\n', f.readlines()))
+    # Delete old sets
+    r.flushall()
 
-    # Delete old set
-    r.delete(setname)
+    # for each file do upload to redis
+    for filename in file_list:
+        if not os.path.isfile(filename):
+            list_values=[]
+            filename=''
+            sys.stdout.write('Fail upload to {}\n'.format(filename))
+        else:
+            setname = filename
 
-    # Upload new set
-    i = 0
-    for val in list_values:
-        key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
-        i+=1
-        r.sadd(setname, key)
-        r.set(key, val)
-    sys.stdout.write('{} values from {} file are uploaded\n'.format(len(list_values), filename))
+            # Read values from the file into the list
+            with open(filename) as f:
+                list_values = list(filter(lambda string: string != '\n', f.readlines()))
+
+        # Upload new set
+        i = 0
+        for val in list_values:
+            key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
+            i+=1
+            #r.sadd(setname, key)
+            r.set(key, val)
+        sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
 
 
 class TestObject():
