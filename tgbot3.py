@@ -20,12 +20,14 @@ server = Flask(__name__)
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
+    sys.stdout.write('Captain is drunk\n')
     bot.send_message(message.chat.id, random.choice(config.silence_words))
 
 
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
+    sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
     text = get_quotes(filename=config.filename1)
     bot.send_message(message.chat.id, text)
 
@@ -33,6 +35,7 @@ def answer_common(message):
 @bot.message_handler(func=curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
+    sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
     text = get_quotes()
     bot.send_message(message.chat.id, text)
 
@@ -52,8 +55,8 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
-    sys.stdout.write('Start working!')
-    sys.stdout.write('Uploading to redis...')
+    sys.stdout.write('Start working!\n')
+    #sys.stdout.write('Uploading to redis...\n')
     #try:
     #    upload_toredis(config.filename1)
     #    logging.info('{} is successfully uploaded'.format(config.filename1))
