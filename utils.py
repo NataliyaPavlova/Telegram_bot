@@ -14,13 +14,13 @@ def get_quotes(filename=config.filename2):
     ''' Return randomly chosen quote from 'cheers' or 'curse' file '''
     try:
         with open(filename) as f:
-            sys.stdout.write('Opens the file {} for reading'.format(filename))
+            sys.stdout.write('Opens the file {} for reading\n'.format(filename))
             quotes_list = list(filter(lambda string: string != '\n', f.readlines()))
             index = random.choice(range(len(quotes_list)))
 
         return quotes_list[index]
     except Exception as e:
-        sys.stdout.write('Fails to opens the file {}'.format(filename))
+        sys.stdout.write('Fails to opens the file {}\n'.format(filename))
         raise
 
 
@@ -42,7 +42,7 @@ def check_nots(string, key):
 
 def say_wise(message):
     ''' Return True if message contains smart words '''
-    sys.stdout.write('Parsing {} in say_wise'.format(message.text))
+    sys.stdout.write('Parsing {} in say_wise\n'.format(message.text))
     result1 = False
     result12 = False
     for key in config.wise_words:
@@ -57,7 +57,7 @@ def say_wise(message):
 
 def curse(message):
     ''' Return True if message contains angry words'''
-    sys.stdout.write('Parsing {} in curse'.format(message.text))
+    sys.stdout.write('Parsing {} in curse\n'.format(message.text))
     result = False
     result2 = False
     for key in config.curse_words:
