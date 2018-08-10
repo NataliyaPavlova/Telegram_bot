@@ -21,7 +21,7 @@ server = Flask(__name__)
 def answer_common(message):
     ''' Bot sings pirate songs '''
     sys.stdout.write('Captain is drunk and singing\n')
-    text = json.loads(get_quotes(setname='songs'))
+    text = get_quotes(setname='songs')
     bot.send_message(message.chat.id, text)
 
 
