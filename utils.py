@@ -3,11 +3,14 @@
 
 import random
 import re
-import redis
 import os
 import sys
 import unittest
+import redis
 import config
+
+r_ = redis.from_url(os.environ.get("REDIS_URL"))
+r = r_.Redis()
 
 
 def get_quotes(filename=config.filename2):
@@ -86,15 +89,15 @@ def upload_toredis(filename):
             list_values = list(filter(lambda string: string != '\n', f.readlines()))
 
     # Delete old set
-    redis.delete(setname)
+    r.delete(setname)
 
     # Upload new set
     i = 0
     for val in list_values:
         key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
         i+=1
-        redis.sadd(setname, key)
-        redis.set(key, val)
+        r.sadd(setname, key)
+        r.set(key, val)
     sys.stdout.write('{} values from {} file are uploaded\n'.format(len(list_values), filename))
 
 

@@ -13,7 +13,6 @@ from utils import get_quotes, say_wise, curse, upload_toredis
 
 token = os.environ.get('TG_TOKEN')
 bot = telebot.TeleBot(token)
-redis = redis.from_url(os.environ.get("REDIS_URL"))
 
 server = Flask(__name__)
 
