@@ -3,9 +3,10 @@
 import telebot
 import random
 import os
+import sys
 import config
 import redis
-import logging
+#import logging
 import datetime
 from flask import Flask, request
 from utils import get_quotes, say_wise, curse, upload_toredis
@@ -56,8 +57,8 @@ def webhook():
 
 if __name__ == '__main__':
     random.seed()
-    logging.info('Start working!')
-    logging.info('Uploading to redis...')
+    sys.stdout.write('Start working!')
+    sys.stdout.write('Uploading to redis...')
     #try:
     #    upload_toredis(config.filename1)
     #    logging.info('{} is successfully uploaded'.format(config.filename1))

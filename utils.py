@@ -5,17 +5,23 @@ import random
 import re
 import redis
 import os
+import sys
 import unittest
 import config
 
 
 def get_quotes(filename=config.filename2):
     ''' Return randomly chosen quote from 'cheers' or 'curse' file '''
-    with open(filename) as f:
-        quotes_list = list(filter(lambda string: string != '\n', f.readlines()))
-        index = random.choice(range(len(quotes_list)))
+    try:
+        with open(filename) as f:
+            sys.stdout.write('Opens the file {} for reading'.format(filename))
+            quotes_list = list(filter(lambda string: string != '\n', f.readlines()))
+            index = random.choice(range(len(quotes_list)))
 
-    return quotes_list[index]
+        return quotes_list[index]
+    except Exception as e:
+        sys.stdout.write('Fails to opens the file {}'.format(filename))
+        raise
 
 
 def check_nots(string, key):
@@ -30,11 +36,13 @@ def check_nots(string, key):
                 if re.search(not_word, part):
                     if str.find(part, not_word) < str.find(part, key):
                         return False
+
     return True
 
 
 def say_wise(message):
     ''' Return True if message contains smart words '''
+    sys.stdout.write('Parsing {} in say_wise'.format(message.text))
     result1 = False
     result12 = False
     for key in config.wise_words:
@@ -49,6 +57,7 @@ def say_wise(message):
 
 def curse(message):
     ''' Return True if message contains angry words'''
+    sys.stdout.write('Parsing {} in curse'.format(message.text))
     result = False
     result2 = False
     for key in config.curse_words:
@@ -92,6 +101,7 @@ class TestObject():
     ''' Helper: to create analogue of telegram message type for testing utils functions'''
     def __init__(self, string):
         self.text = string
+
 
 class Test_utils(unittest.TestCase):
     ''' unittests for utils functions '''
