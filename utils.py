@@ -23,13 +23,13 @@ def check_nots(string, key):
     # split string with , or ; or : or . or !
     parts = re.split("[,;.!]", string)
 
-    # if in part with 'wise' words are 'not' words, then false
+    # if in part with 'wise'/'curse' words are 'not' words, then false
     for part in parts:
         if key in part:
             for not_word in config.not_words:
                 if re.search(not_word, part):
-                    return False
-
+                    if str.find(part, not_word) < str.find(part, key):
+                        return False
     return True
 
 
@@ -38,7 +38,7 @@ def say_wise(message):
     result1 = False
     result12 = False
     for key in config.wise_words:
-        if key in re.split(' ', str(message.text).lower()):
+        if key in re.split('\W', str(message.text).lower()):
             result1 = True
             break
     if result1:
@@ -102,7 +102,7 @@ class Test_utils(unittest.TestCase):
     def test_say_wise(self):
         string1 = 'want to hear smth intelligent please'
         string2 = "don't want smart thoughts"
-        string3 = 'what does Nietzsche say'
+        string3 = "smart, don't be jerk"
 
         self.assertEqual(True, say_wise(TestObject(string1)))
         self.assertEqual(False, say_wise(TestObject(string2)))
@@ -112,10 +112,11 @@ class Test_utils(unittest.TestCase):
     def test_check_nots(self):
         string1 = 'dont say smth intelligent, please'
         string2 = 'say smth clever, dont be so rude'
+        string3 = 'Nietzsche dont be so cool'
 
         self.assertEqual(False, check_nots(string1, 'intelligent'))
         self.assertEqual(True, check_nots(string2, 'clever'))
-
+        self.assertEqual(True, check_nots(string3, 'Nietzsche'))
 
     def test_curse(self):
         string1 = 'i am soooo Angry'

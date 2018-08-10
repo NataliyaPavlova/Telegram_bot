@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-not_words = ['dont', "don\u2019t", 'not', 'stop']
+not_words = ['dont', "don\u2019t", "don\'t", 'not', 'stop']
 wise_words = ['smart', 'clever', 'intelligent', 'nietzsche']
 curse_words = ['angry', 'fuck', 'wtf', 'furious', 'evil',
                'grumpy', 'yelling', 'kill', 'shit', 'damn',
