@@ -88,7 +88,7 @@ def upload_songs_toredis(filename):
         # Read values from the file into the list
         with open(filename) as f:
             for line in f:
-                if line=='*':
+                if line=='*\n':
                     sys.stdout.write('Song is {}\n'.format(song))
 
                     # it means the song is over and we save song to redis
@@ -124,7 +124,6 @@ def upload_toredis(file_list):
             # Read values from the file into the list
             with open(filename) as f:
                 list_values = list(filter(lambda string: string != '\n', f.readlines()))
-                sys.stdout.write(str(list_values))
                 # Upload new set
                 i = 0
                 for val in list_values:
