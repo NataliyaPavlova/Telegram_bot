@@ -63,14 +63,13 @@ if __name__ == '__main__':
     try:
         if not (upload_toredis(file_list)):
             sys.stdout.write('Fail upload to redis: file not found!\n')
-        elif not (upload_songs_toredis(songs_file)):
+        if not (upload_songs_toredis(songs_file)):
             sys.stdout.write('Fail upload to redis: file with songs not found!\n')
-        else:
-            sys.stdout.write('Files are successfully uploaded\n')
 
     except Exception as err:
         sys.stdout.write('Fail upload to redis: {}'.format(err))
         raise
 
+    sys.stdout.write('Files are successfully uploaded\n')
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
