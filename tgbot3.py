@@ -61,10 +61,10 @@ if __name__ == '__main__':
     file_list = [config.filename1, config.filename2]
     songs_file = config.filename3
     try:
-        if not (upload_toredis(file_list) and upload_songs_toredis(songs_file)):
-            sys.stdout.write('Fail upload to redis: files not found')
+        if not (upload_toredis(file_list)) or not (upload_songs_toredis(songs_file)):
+            sys.stdout.write('Fail upload to redis: file not found!\n')
         else:
-            sys.stdout.write('Files are successfully uploaded')
+            sys.stdout.write('Files are successfully uploaded\n')
 
     except Exception as err:
         sys.stdout.write('Fail upload to redis: {}'.format(err))
