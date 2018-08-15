@@ -95,6 +95,7 @@ def upload_songs_toredis(filename):
                     r.set(key, song)
                     song = []
                     key_index += 1
+                    sys.stdout.write(str(song))
                 else:
                     song.append(line)
 
