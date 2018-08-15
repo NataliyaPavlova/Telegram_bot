@@ -73,6 +73,35 @@ def curse(message):
     return bool(result2)
 
 
+def upload_songs_toredis(filename):
+    ''' Upload data from file with songs to redis'''
+
+    # redis stores key-value: id-text
+
+    if not os.path.isfile(filename):
+        sys.stdout.write('Fail upload to {}\n'.format(filename))
+        return 1
+    else:
+        setname = filename
+        song = []
+        key_index = 0
+        # Read values from the file into the list
+        with open(filename) as f:
+            for line in f:
+                if line=='*':
+                    # it means the song is over and we save song to redis
+                    key = '{}.{}:'.format(setname, key_index)  # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
+                    r.sadd(setname, key)
+                    r.set(key, song)
+                    song = []
+                    key_index += 1
+                else:
+                    song.append(line)
+
+        sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
+        return 0
+
+
 def upload_toredis(file_list):
     ''' Upload data from files with curse and cheer expressions to redis'''
     # redis stores key-value: id-text
@@ -82,10 +111,10 @@ def upload_toredis(file_list):
 
     # for each file do upload to redis
     for filename in file_list:
+
         if not os.path.isfile(filename):
-            list_values=[]
-            filename=''
             sys.stdout.write('Fail upload to {}\n'.format(filename))
+            return 1
         else:
             setname = filename
 
@@ -93,14 +122,15 @@ def upload_toredis(file_list):
             with open(filename) as f:
                 list_values = list(filter(lambda string: string != '\n', f.readlines()))
 
-        # Upload new set
-        i = 0
-        for val in list_values:
-            key = '{}.{}:'.format(setname, i)   # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
-            i+=1
-            r.sadd(setname, key)
-            r.set(key, val)
-        sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
+                # Upload new set
+                i = 0
+                for val in list_values:
+                    key = '{}.{}:'.format(setname, i)  # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
+                    i += 1
+                    r.sadd(setname, key)
+                    r.set(key, val)
+                sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
+                return 0
 
 
 class TestObject():

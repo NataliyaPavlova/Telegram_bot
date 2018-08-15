@@ -10,7 +10,7 @@ import redis
 #import logging
 import datetime
 from flask import Flask, request
-from utils import get_quotes, say_wise, curse, upload_toredis
+from utils import get_quotes, say_wise, curse, upload_toredis, upload_songs_toredis
 
 token = os.environ.get('TG_TOKEN')
 bot = telebot.TeleBot(token)
@@ -58,12 +58,13 @@ if __name__ == '__main__':
     random.seed()
     sys.stdout.write('Start working!\n')
     sys.stdout.write('Start uploading to redis...\n')
-    file_list = [config.filename1, config.filename2, config.filename3]
+    file_list = [config.filename1, config.filename2]
+    songs_file = config.filename3
     try:
-        upload_toredis(file_list)
-        sys.stdout.write('Files are successfully uploaded')
-    #    upload_toredis(config.filename2)
-    #    logging.info('{} is successfully uploaded'.format(config.filename1))
+        if not (upload_toredis(file_list) and upload_songs_toredis(songs_file)):
+            sys.stdout.write('Fail upload to redis: files not found')
+        else:
+            sys.stdout.write('Files are successfully uploaded')
 
     except Exception as err:
         sys.stdout.write('Fail upload to redis: {}'.format(err))
