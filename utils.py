@@ -89,18 +89,20 @@ def upload_songs_toredis(filename):
         with open(filename) as f:
             for line in f:
                 if line=='*':
+                    sys.stdout.write('Song is {}\n'.format(song))
+
                     # it means the song is over and we save song to redis
                     key = '{}.{}:'.format(setname, key_index)  # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
                     r.sadd(setname, key)
                     r.set(key, song)
                     song = []
                     key_index += 1
-                    sys.stdout.write(str(song))
+                    #sys.stdout.write(str(song))
                 else:
                     song.append(line)
 
-        sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
-        return 0
+    sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
+    return 0
 
 
 def upload_toredis(file_list):
@@ -131,7 +133,7 @@ def upload_toredis(file_list):
                     r.sadd(setname, key)
                     r.set(key, val)
                 sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
-                return 0
+    return 0
 
 
 class TestObject():
