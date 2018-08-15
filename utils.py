@@ -121,7 +121,7 @@ def upload_toredis(file_list):
             # Read values from the file into the list
             with open(filename) as f:
                 list_values = list(filter(lambda string: string != '\n', f.readlines()))
-                sys.stdout.write(list_values)
+                sys.stdout.write(str(list_values))
                 # Upload new set
                 i = 0
                 for val in list_values:
