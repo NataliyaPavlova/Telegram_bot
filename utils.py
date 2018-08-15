@@ -80,10 +80,10 @@ def upload_songs_toredis(filename):
 
     if not os.path.isfile(filename):
         sys.stdout.write('Fail upload to {}\n'.format(filename))
-        return 1
+        return 0
     else:
         setname = filename
-        song = []
+        song = ''
         key_index = 0
         # Read values from the file into the list
         with open(filename) as f:
@@ -95,14 +95,14 @@ def upload_songs_toredis(filename):
                     key = '{}.{}:'.format(setname, key_index)  # curse.0:, curse.1:, ... or cheer.0:, cheer.1:, ...
                     r.sadd(setname, key)
                     r.set(key, song)
-                    song = []
+                    song = ''
                     key_index += 1
                     #sys.stdout.write(str(song))
                 else:
-                    song.append(line)
+                    song = song + line
 
     sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
-    return 0
+    return 1
 
 
 def upload_toredis(file_list):
@@ -117,7 +117,7 @@ def upload_toredis(file_list):
 
         if not os.path.isfile(filename):
             sys.stdout.write('Fail upload to {}\n'.format(filename))
-            return 1
+            return 0
         else:
             setname = filename
 
@@ -132,7 +132,7 @@ def upload_toredis(file_list):
                     r.sadd(setname, key)
                     r.set(key, val)
                 sys.stdout.write('{} values from {} file are successfully uploaded\n'.format(r.scard(setname), filename))
-    return 0
+    return 1
 
 
 class TestObject():

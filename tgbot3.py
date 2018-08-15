@@ -70,6 +70,6 @@ if __name__ == '__main__':
         sys.stdout.write('Fail upload to redis: {}'.format(err))
         raise
 
-    sys.stdout.write('Files are successfully uploaded\n')
+    #sys.stdout.write('Files are successfully uploaded\n')
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
