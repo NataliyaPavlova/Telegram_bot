@@ -40,7 +40,7 @@ def answer_common(message):
     text = get_quotes(setname='cheer')
     bot.send_message(message.chat.id, text)
 
-
+@bot.edited_message_handler(func=curse)
 @bot.message_handler(func=curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
