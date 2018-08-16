@@ -5,7 +5,7 @@ import sys
 import telebot
 from flask import Flask, request
 import config
-from utils import get_quotes, say_wise, curse, upload_toredis, upload_songs_toredis
+import utils
 
 token = os.environ.get('TG_TOKEN')
 bot = telebot.TeleBot(token)
@@ -20,10 +20,10 @@ def data_upload():
     file_list = [config.filename1, config.filename2]
     songs_file = config.filename3
     try:
-        if not (upload_toredis(file_list)):
+        if not (utils.upload_toredis(file_list)):
             sys.stdout.write('Fail upload to redis: file not found!\n')
             return False
-        if not (upload_songs_toredis(songs_file)):
+        if not (utils.upload_songs_toredis(songs_file)):
             sys.stdout.write('Fail upload to redis: file with songs not found!\n')
             return False
 
@@ -39,25 +39,25 @@ def data_upload():
 def answer_common(message):
     ''' Bot sings pirate songs '''
     sys.stdout.write('Captain is drunk and singing and it is so True\n')
-    text = get_quotes(setname='songs')
+    text = utils.get_quotes(setname='songs')
     bot.send_message(message.chat.id, text)
 
 
-@bot.edited_message_handler(func=say_wise)
-@bot.message_handler(func=say_wise)
+@bot.edited_message_handler(func=utils.say_wise)
+@bot.message_handler(func=utils.say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
     sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
-    text = get_quotes(setname='cheer')
+    text = utils.get_quotes(setname='cheer')
     bot.send_message(message.chat.id, text)
 
 
-@bot.edited_message_handler(func=curse)
-@bot.message_handler(func=curse)
+@bot.edited_message_handler(func=utils.curse)
+@bot.message_handler(func=utils.curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
-    text = get_quotes(setname='curse')
+    text = utils.get_quotes(setname='curse')
     bot.send_message(message.chat.id, text)
 
 
@@ -84,5 +84,6 @@ def webhook():
 
 if __name__ == '__main__':
     #data_upload()
+    utils.r.flushall()
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
