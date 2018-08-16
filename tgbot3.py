@@ -17,28 +17,23 @@ bot = telebot.TeleBot(token)
 
 server = Flask(__name__)
 
+@bot.edited_message_handler(regexp='@WolfLarsen')
 @bot.message_handler(regexp='@WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
-    sys.stdout.write('Captain is drunk and singing\n')
+    sys.stdout.write('Captain is drunk and singing and it is so True\n')
     text = get_quotes(setname='songs')
     bot.send_message(message.chat.id, text)
 
 
-@bot.edited_message_handler(regexp='@WolfLarsen')
-def answer_common(message):
-    ''' Bot sings pirate songs '''
-    sys.stdout.write('Captain is drunk and singing\n')
-    text = get_quotes(setname='songs')
-    bot.send_message(message.chat.id, text)
-
-
+@bot.edited_message_handler(func=say_wise)
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
     sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
     text = get_quotes(setname='cheer')
     bot.send_message(message.chat.id, text)
+
 
 @bot.edited_message_handler(func=curse)
 @bot.message_handler(func=curse)
