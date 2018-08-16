@@ -7,7 +7,7 @@ curse_words = ['angry', 'arse', 'fuck', 'wtf', 'furious', 'evil',
                'asshole', 'ftw', 'stupid', 'bitch',
                'whore', 'crap', 'bastard', 'jerk', 'slut', 'faggot', 'hell']
 
-filename1='cheer'
+filename1='cheer1'
 filename2='curse'
 filename3='songs'
 
