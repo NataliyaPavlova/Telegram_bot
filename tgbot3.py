@@ -64,8 +64,8 @@ def answer_common(message):
 @bot.message_handler(func=data_upload)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
-    sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
-    text = get_quotes(setname='curse')
+    sys.stdout.write('Fail upload, sending error message to channel\n')
+    text = "Go away, Hump, I am shot away and two sheets to the wind."
     bot.send_message(message.chat.id, text)
 
 
