@@ -83,6 +83,6 @@ def webhook():
 
 
 if __name__ == '__main__':
-    data_upload()
+    #data_upload()
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
