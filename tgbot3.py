@@ -25,6 +25,14 @@ def answer_common(message):
     bot.send_message(message.chat.id, text)
 
 
+@bot.edited_message_handler(regexp='@WolfLarsen')
+def answer_common(message):
+    ''' Bot sings pirate songs '''
+    sys.stdout.write('Captain is drunk and singing\n')
+    text = get_quotes(setname='songs')
+    bot.send_message(message.chat.id, text)
+
+
 @bot.message_handler(func=say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
