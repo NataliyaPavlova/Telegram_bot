@@ -61,7 +61,7 @@ def answer_common(message):
     bot.send_message(message.chat.id, text)
 
 
-@bot.message_handler(func=data_upload)
+@bot.message_handler(func=not(data_upload))
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
     sys.stdout.write('Fail upload, sending error message to channel\n')
