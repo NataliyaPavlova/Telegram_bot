@@ -34,10 +34,10 @@ def data_upload():
     return True
 
 
-@bot.edited_message_handler(commands=['start'])
-@bot.message_handler(commands=['start'])
+#@bot.edited_message_handler(commands=['start'])
+@bot.message_handler(func=lambda message: message.group_chat_created==True)
 def answer_common(message):
-    ''' Bot welocomes '''
+    ''' Bot welcomes '''
     sys.stdout.write('Sending welcome instructions...\n')
     bot.send_message(message.chat.id, config.start_text)
 
