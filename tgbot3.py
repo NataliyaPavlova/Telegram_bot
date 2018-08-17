@@ -34,8 +34,24 @@ def data_upload():
     return True
 
 
-@bot.edited_message_handler(regexp='@WolfLarsen')
-@bot.message_handler(regexp='@WolfLarsen')
+@bot.edited_message_handler(commands=['start'])
+@bot.message_handler(commands=['start'])
+def answer_common(message):
+    ''' Bot welocomes '''
+    sys.stdout.write('Sending welcome instructions...\n')
+    bot.send_message(message.chat.id, config.start_text)
+
+
+@bot.edited_message_handler(commands=['help'])
+@bot.message_handler(commands=['help'])
+def answer_common(message):
+    ''' Bot answer for /help command '''
+    sys.stdout.write('Sending help instructions...\n')
+    bot.send_message(message.chat.id, config.help_text)
+
+
+@bot.edited_message_handler(regexp='WolfLarsen')
+@bot.message_handler(regexp='WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
     sys.stdout.write('Captain is drunk and singing and it is so True\n')
@@ -61,13 +77,8 @@ def answer_common(message):
     bot.send_message(message.chat.id, text)
 
 
-@bot.message_handler(func=not(data_upload))
-def answer_common(message):
-    ''' Bot curses down with quoted from curse file'''
-    sys.stdout.write('Fail upload, sending error message to channel\n')
-    text = "Go away, Hump, I am shot away and two sheets to the wind."
-    bot.send_message(message.chat.id, text)
-
+#    sys.stdout.write('Fail upload, sending error message to channel\n')
+#   text = "Go away, Hump, I am shot away and two sheets to the wind."
 
 @server.route('/' + token, methods=['POST'])
 def getMessage():
@@ -83,6 +94,6 @@ def webhook():
 
 
 if __name__ == '__main__':
-    #data_upload()
+    data_upload()
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
