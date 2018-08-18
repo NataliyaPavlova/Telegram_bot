@@ -16,7 +16,7 @@ error_text = "Go away, Hump, I am shot away and two sheets to the wind."
 
 
 filename1='cheer'
-filename2='curse'
+filename2='curse1'
 filename3='songs'
 
 
