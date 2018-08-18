@@ -132,6 +132,27 @@ def upload_toredis(file_list):
     return 1
 
 
+def data_upload():
+    ''' Upload data from files to redis'''
+    sys.stdout.write('Start working!\n')
+    sys.stdout.write('Start uploading to redis...\n')
+    file_list = [config.filename1, config.filename2]
+    songs_file = config.filename3
+    try:
+        if not (upload_toredis(file_list)):
+            sys.stdout.write('Fail upload to redis: file not found!\n')
+            return False
+        elif not (upload_songs_toredis(songs_file)):
+            sys.stdout.write('Fail upload to redis: file with songs not found!\n')
+            return False
+
+    except Exception as err:
+        sys.stdout.write('Fail upload to redis: {}'.format(err))
+        return False
+
+    return True
+
+
 class TestObject():
     ''' Helper: to create analogue of telegram message type for testing utils functions'''
     def __init__(self, string):

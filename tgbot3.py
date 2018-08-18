@@ -13,27 +13,6 @@ bot = telebot.TeleBot(token)
 server = Flask(__name__)
 
 
-def data_upload():
-    ''' Upload data from files to redis'''
-    sys.stdout.write('Start working!\n')
-    sys.stdout.write('Start uploading to redis...\n')
-    file_list = [config.filename1, config.filename2]
-    songs_file = config.filename3
-    try:
-        if not (utils.upload_toredis(file_list)):
-            sys.stdout.write('Fail upload to redis: file not found!\n')
-            return False
-        if not (utils.upload_songs_toredis(songs_file)):
-            sys.stdout.write('Fail upload to redis: file with songs not found!\n')
-            return False
-
-    except Exception as err:   #todo handle tg bot exception
-        sys.stdout.write('Fail upload to redis: {}'.format(err))
-        return False
-
-    return True
-
-
 @bot.edited_message_handler(commands=['start'])
 @bot.message_handler(commands=['start'])
 def answer_common(message):
@@ -116,6 +95,6 @@ def webhook():
 
 
 if __name__ == '__main__':
-    data_upload()
+    utils.data_upload()
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
 
