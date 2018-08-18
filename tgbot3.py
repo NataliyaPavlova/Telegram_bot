@@ -34,51 +34,73 @@ def data_upload():
     return True
 
 
-#@bot.edited_message_handler(commands=['start'])
-@bot.message_handler(func=lambda message: message.group_chat_created==True)
+@bot.edited_message_handler(commands=['start'])
+@bot.message_handler(commands=['start'])
 def answer_common(message):
     ''' Bot welcomes '''
-    sys.stdout.write('Sending welcome instructions...\n')
-    bot.send_message(message.chat.id, config.start_text)
+    try:
+        sys.stdout.write('Sending welcome instructions...\n')
+        bot.send_message(message.chat.id, config.start_text)
+    except Exception as e:
+        sys.stdout.write('Failure {}, sending error message to channel\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
 
 
 @bot.edited_message_handler(commands=['help'])
 @bot.message_handler(commands=['help'])
 def answer_common(message):
     ''' Bot answer for /help command '''
-    sys.stdout.write('Sending help instructions...\n')
-    bot.send_message(message.chat.id, config.help_text)
+    try:
+        sys.stdout.write('Sending help instructions...\n')
+        bot.send_message(message.chat.id, config.help_text)
+    except Exception as e:
+        sys.stdout.write('Failure {}, sending error message to channel...\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
 
 
 @bot.edited_message_handler(regexp='WolfLarsen')
 @bot.message_handler(regexp='WolfLarsen')
 def answer_common(message):
     ''' Bot sings pirate songs '''
-    sys.stdout.write('Captain is drunk and singing and it is so True\n')
-    text = utils.get_quotes(setname='songs')
-    bot.send_message(message.chat.id, text)
+    try:
+        sys.stdout.write('Captain is drunk and singing and it is so True\n')
+        text = utils.get_quotes(setname='songs')
+        bot.send_message(message.chat.id, text)
+    except Exception as e:
+        sys.stdout.write('Failure {}, sending error message to channel...\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
 
 
 @bot.edited_message_handler(func=utils.say_wise)
 @bot.message_handler(func=utils.say_wise)
 def answer_common(message):
     ''' Bot replies with quotes from cheer file'''
-    sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
-    text = utils.get_quotes(setname='cheer')
-    bot.send_message(message.chat.id, text)
+    try:
+        sys.stdout.write('Function say_wise returns True on msg {}\n'.format(message.text))
+        text = utils.get_quotes(setname='cheer')
+        bot.send_message(message.chat.id, text)
+    except Exception as e:
+        sys.stdout.write('Failure {}, sending error message to channel...\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
 
 
 @bot.edited_message_handler(func=utils.curse)
 @bot.message_handler(func=utils.curse)
 def answer_common(message):
     ''' Bot curses down with quoted from curse file'''
-    sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
-    text = utils.get_quotes(setname='curse')
-    bot.send_message(message.chat.id, text)
+    try:
+        sys.stdout.write('Function curse returns True on msg {}\n'.format(message.text))
+        text = utils.get_quotes(setname='curse')
+        bot.send_message(message.chat.id, text)
+    except Exception as e:
+        sys.stdout.write('Failure {}, sending error message to channel...\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
 
-
-#    sys.stdout.write('Fail upload, sending error message to channel\n')
-#   text = "Go away, Hump, I am shot away and two sheets to the wind."
 
 @server.route('/' + token, methods=['POST'])
 def getMessage():

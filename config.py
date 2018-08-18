@@ -11,6 +11,9 @@ help_text = "Here is how it works: \nIf you use words 'smart', 'clever', 'intell
        "I will send you a piece of wisdom from Jack London's 'Sea Wolf'\n " \
        "If you swear, I will support you and will send a curse. \n" \
        "If you directly call 'WolfLarsen' or '@WolfLarsen' or '@WolfLarsenbot', I will sing for you"
+error_text = "Go away, Hump, I am shot away and two sheets to the wind."
+
+
 
 filename1='cheer'
 filename2='curse'
