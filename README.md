@@ -1,5 +1,6 @@
 # Telegram_bot
 yelling and cursing @WolfLarsenbot 
+
 Inspired by "Sea Wolf" by Jack London
 
 It is deployed on Heroku and is activated.
@@ -10,4 +11,5 @@ from Jack London's 'Sea Wolf'
 If you swear, it will support you and will send a curse. 
 If you directly call 'WolfLarsen' or '@WolfLarsen' or '@WolfLarsenbot', it will sing for you.
 The lists of qoutes, curses and songs are uploaded to Heroku Redis. The bot's answer is randomly chosen every time when it is needed.
+
 Enjoy!
