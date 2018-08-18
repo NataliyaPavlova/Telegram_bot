@@ -7,7 +7,7 @@ It is deployed on Heroku and is activated.
 
 You may add @WolfLarsenbot to a group or send a direct message to him.
 
-Here is how it works: if you use words 'smart', 'clever', 'intelligent', 'Nietzsche', it will send you a Wolf Larsen qoute 
+Here is how it works: if you use words 'smart', 'clever', 'intelligent', 'Nietzsche', it will send you a Wolf Larsen quote 
 from Jack London's 'Sea Wolf'.
 
 If you swear, it will support you and will send a curse.
