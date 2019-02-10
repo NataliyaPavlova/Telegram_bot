@@ -14,6 +14,8 @@ If you swear, it will support you and will send a curse.
 
 If you directly call 'WolfLarsen' or '@WolfLarsen' or '@WolfLarsenbot', it will sing for you.
 
+If you command '/spell text', I will spell the text using nautical signal flags.
+
 The lists of quotes, curses and songs are uploaded to Heroku Redis from the files 'cheer', 'curse' and 'songs'. The bot's answer is randomly chosen every time when it is needed.
 
 
