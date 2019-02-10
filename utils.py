@@ -8,6 +8,7 @@ import sys
 import unittest
 import redis
 import config
+import string
 
 r = redis.from_url(os.environ.get("REDIS_URL"), decode_responses=True)
 
@@ -72,6 +73,18 @@ def curse(message):
         result2 = check_nots(str(message.text).lower(), key)
     return bool(result2)
 
+
+def spell(message):
+    ''' Read the message and return its translation to nautical flags transcription'''
+    sys.stdout.write('Start transcription to nautical spelling')
+    if len(message)>config.max_spelling:
+        return 'Sorry, the message is too long for an old filibuster.'
+    else:
+        # first word is command
+        sentence = message.lower().split()[1:]
+        lst = [config.nautical_flags_dict[letter] if letter in string.ascii_lowercase else ' ' for word in sentence for letter in word]
+        return '-'.join(lst)
+       
 
 def upload_songs_toredis(filename):
     ''' Upload data from file with songs to redis'''

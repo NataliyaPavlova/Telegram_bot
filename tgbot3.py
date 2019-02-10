@@ -39,6 +39,19 @@ def answer_common(message):
         raise e
 
 
+@bot.edited_message_handler(commands=['spell'])
+@bot.message_handler(commands=['spell'])
+def answer_common(message):
+    ''' Bot answer for /spell command '''
+    try:
+        sys.stdout.write('Spelling with nautical flags...\n')
+        bot.send_message(message.chat.id, utils.spell(message))
+    except Exception as e:
+        sys.stdout.write('Failure spelling: {}, sending error message to channel...\n'.format(e))
+        bot.send_message(message.chat.id, config.error_text)
+        raise e
+
+
 @bot.edited_message_handler(regexp='WolfLarsen')
 @bot.message_handler(regexp='WolfLarsen')
 def answer_common(message):
